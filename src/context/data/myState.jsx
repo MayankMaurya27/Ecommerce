@@ -26,6 +26,7 @@ function myState(props) {
         imageUrl: null,
         category: null,
         description: null,
+        quantity: 100, // Default quantity for new products
         time: Timestamp.now(),
         date: new Date().toLocaleString(
             "en-US",

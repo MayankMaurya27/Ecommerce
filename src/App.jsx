@@ -10,6 +10,7 @@ import Home from './pages/home/Home';
 import Order from './pages/order/Order';
 import Cart from './pages/cart/Cart';
 import Dashboard from './pages/admin/dashboard/Dashboard';
+import SmartAdminDashboard from './pages/admin/dashboard/SmartAdminDashboard';
 import NoPage from './pages/nopage/NoPage';
 import MyState from './context/data/myState';
 import Login from './pages/registration/Login';
@@ -36,6 +37,11 @@ function App() {
           <Route path="/dashboard" element={
             <ProtectedRouteForAdmin>
               <Dashboard />
+            </ProtectedRouteForAdmin>
+          } />
+          <Route path="/smart-admin" element={
+            <ProtectedRouteForAdmin>
+              <SmartAdminDashboard />
             </ProtectedRouteForAdmin>
           } />
           <Route path='/login' element={<Login/>} />
@@ -76,9 +82,14 @@ export const ProtectedRoute = ({children}) => {
 // admin 
 
 const ProtectedRouteForAdmin = ({children})=> {
-  const admin = JSON.parse(localStorage.getItem('user'))
+  const userData = localStorage.getItem('user')
+  if(!userData){
+    return <Navigate to={'/login'}/>
+  }
   
-  if(admin.user.email === 'xyzbillionarenobody@gmail.com'){
+  const admin = JSON.parse(userData)
+  
+  if(admin?.user?.email === 'xyzbillionarenobody@gmail.com'){
     return children
   }
   else{
